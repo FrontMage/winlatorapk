@@ -131,7 +131,7 @@ public class SettingsFragment extends Fragment {
                         WineUtils.findWineVersionAsync(context, wineDir, (wineInfo) -> {
                             preloaderDialog.closeOnUiThread();
                             if (wineInfo == null) {
-                                AppUtils.showToast(context, R.string.unable_to_install_wine);
+                                AppUtils.showToast(context, R.string.unable_to_install_wine1);
                                 return;
                             }
 
@@ -139,7 +139,7 @@ public class SettingsFragment extends Fragment {
                         });
                     }
                     else {
-                        AppUtils.showToast(context, R.string.unable_to_install_wine);
+                        AppUtils.showToast(context, R.string.unable_to_install_wine2);
                         preloaderDialog.closeOnUiThread();
                     }
                 });
@@ -290,7 +290,7 @@ public class SettingsFragment extends Fragment {
 
         File wineDir = new File(installedWineDir, wineInfo.identifier());
         if (wineDir.isDirectory()) {
-            AppUtils.showToast(context, R.string.unable_to_install_wine);
+            AppUtils.showToast(context, R.string.unable_to_install_wine3);
             return;
         }
 
