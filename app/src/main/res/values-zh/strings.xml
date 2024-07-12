@@ -165,7 +165,10 @@
     <string name="installed_version">已安装版本</string>
     <string name="unable_to_download_file">不能下载文件</string>
     <string name="unable_to_import_profile">无法导入配置文件</string>
-    <string name="unable_to_install_wine">无法安装wine</string>
+    <string name="unable_to_install_wine1">无法安装wine1</string>
+    <string name="unable_to_install_wine2">无法安装wine2</string>
+    <string name="unable_to_install_wine3">无法安装wine3</string>
+    <string name="unable_to_install_wine4">无法安装wine4</string>
     <string name="downloading_file">正在下载文件...</string>
     <string name="unable_to_load_profile_list">无法加载配置文件列表</string>
     <string name="unable_to_remove_this_wine_version">无法删除此 wine 版本</string>

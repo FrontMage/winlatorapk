@@ -116,7 +116,10 @@
     <string name="install_wine">Install Wine</string>
     <string name="arch">Arch</string>
     <string name="version">Version</string>
-    <string name="unable_to_install_wine">Unable to install Wine</string>
+    <string name="unable_to_install_wine1">Unable to install Wine 1</string>
+    <string name="unable_to_install_wine2">Unable to install Wine 2</string>
+    <string name="unable_to_install_wine3">Unable to install Wine 3</string>
+    <string name="unable_to_install_wine4">Unable to install Wine 4</string>
     <string name="unable_to_remove_this_wine_version">Unable to remove this wine version</string>
     <string name="wine_version">Wine Version</string>
     <string name="removing_wine">Removing Wine...</string>
