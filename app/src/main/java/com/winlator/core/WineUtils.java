@@ -2,6 +2,7 @@ package com.winlator.core;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.winlator.container.Container;
 import com.winlator.xenvironment.ImageFs;
@@ -22,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class WineUtils {
+    private static final String TAG = "WineUtils";
     public static void createDosdevicesSymlinks(Container container) {
         String dosdevicesPath = (new File(container.getRootDir(), ".wine/dosdevices")).getPath();
         File[] files = (new File(dosdevicesPath)).listFiles();
@@ -55,23 +57,27 @@ public abstract class WineUtils {
     public static void findWineVersionAsync(Context context, File wineDir, Callback<WineInfo> callback) {
         if (wineDir == null || !wineDir.isDirectory()) {
             callback.call(null);
+            Log.d(TAG, "Wine directory not found0");
             return;
         }
         File[] files = wineDir.listFiles();
         if (files == null || files.length == 0) {
             callback.call(null);
+            Log.d(TAG, "Wine bin directory not found1");
             return;
         }
 
         if (files.length == 1) {
             if (!files[0].isDirectory()) {
                 callback.call(null);
+                Log.d(TAG, "Wine directory not found2");
                 return;
             }
             wineDir = files[0];
             files = wineDir.listFiles();
             if (files == null || files.length == 0) {
                 callback.call(null);
+                Log.d(TAG, "Wine bin directory not found3");
                 return;
             }
         }
@@ -85,6 +91,7 @@ public abstract class WineUtils {
         }
 
         if (binDir == null) {
+            Log.d(TAG, "Wine bin directory not found");
             callback.call(null);
             return;
         }
@@ -93,6 +100,7 @@ public abstract class WineUtils {
         File wineBin64 = new File(binDir, "wine64");
 
         if (!wineBin32.isFile()) {
+            Log.d(TAG, "Wine 32-bit binary not found");
             callback.call(null);
             return;
         }
@@ -108,8 +116,11 @@ public abstract class WineUtils {
         try {
             final AtomicReference<WineInfo> wineInfoRef = new AtomicReference<>();
             ProcessHelper.debugCallback = (line) -> {
+                // Print the line to the logcat
+                Log.d(TAG, "Wine version line: "+line);
                 Pattern pattern = Pattern.compile("^wine\\-([0-9\\.]+)\\-?([0-9\\.]+)?", Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(line);
+                Log.d(TAG, "Wine version is: "+matcher.find());
                 if (matcher.find()) {
                     String version = matcher.group(1);
                     String subversion = matcher.groupCount() >= 2 ? matcher.group(2) : null;
@@ -127,6 +138,9 @@ public abstract class WineUtils {
             guestProgramLauncherComponent.setTerminationCallback((status) -> callback.call(wineInfoRef.get()));
             environment.addComponent(guestProgramLauncherComponent);
             environment.startEnvironmentComponents();
+        } catch (Exception e) {
+            Log.e(TAG, "Error finding wine version", e);
+            callback.call(null);
         }
         finally {
             ProcessHelper.debugCallback = null;
