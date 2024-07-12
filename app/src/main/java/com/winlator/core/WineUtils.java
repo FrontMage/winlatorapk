@@ -120,10 +120,10 @@ public abstract class WineUtils {
                 Log.d(TAG, "Wine version line: "+line);
                 Pattern pattern = Pattern.compile("^wine\\-([0-9\\.]+)\\-?([0-9\\.]+)?", Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(line);
-                Log.d(TAG, "Wine version is: "+matcher.find());
                 if (matcher.find()) {
                     String version = matcher.group(1);
                     String subversion = matcher.groupCount() >= 2 ? matcher.group(2) : null;
+                    Log.d(TAG, "Wine version is: "+version+"-"+subversion+"-"+arch+" at "+winePath);
                     wineInfoRef.set(new WineInfo(version, subversion, arch, winePath));
                 }
             };
